@@ -7,14 +7,20 @@ import { useRouter } from "next/navigation";
 import Avatar from "@/components/Avatar";
 import MenuItem from "@/components/MenuItem";
 
+import { useRegisterModal } from "@/hooks/useRegisterModal";
+import { useLoginModal } from "@/hooks/useLoginModal";
 import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 
 export default function UserMenu() {
-  const currentUser = true;
+  const ref = useRef(null);
+
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
 
-  const ref = useRef(null);
+  const currentUser = false;
+
+  const registerModal = useRegisterModal();
+  const loginModal = useLoginModal();
 
   const toggleOpen = useCallback(() => {
     setIsOpen((value) => !value);
@@ -106,8 +112,20 @@ export default function UserMenu() {
               </>
             ) : (
               <>
-                <MenuItem label="Login" onClick={() => {}} />
-                <MenuItem label="Sign up" onClick={() => {}} />
+                <MenuItem
+                  label="Login"
+                  onClick={() => {
+                    setIsOpen(false);
+                    loginModal.onOpen();
+                  }}
+                />
+                <MenuItem
+                  label="Sign up"
+                  onClick={() => {
+                    setIsOpen(false);
+                    registerModal.onOpen();
+                  }}
+                />
               </>
             )}
           </div>
