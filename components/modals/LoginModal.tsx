@@ -4,7 +4,7 @@ import { useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { toast } from "react-hot-toast";
-// import { signIn } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
 import { useRegisterModal } from "@/hooks/useRegisterModal";
@@ -15,7 +15,7 @@ import { AiFillGithub } from "react-icons/ai";
 
 import Modal from "@/components/modals/Modal";
 import Button from "@/components/Button";
-import Input from "@/components/Input";
+import Input from "@/components/inputs/Input";
 import Heading from "@/components/Heading";
 
 export default function LoginModal() {
@@ -38,22 +38,20 @@ export default function LoginModal() {
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
 
-    // signIn("credentials", {
-    //   ...data,
-    //   redirect: false,
-    // }).then((callback) => {
-    //   setIsLoading(false);
-
-    //   if (callback?.ok) {
-    //     toast.success("Logged in");
-    //     router.refresh();
-    //     loginModal.onClose();
-    //   }
-
-    //   if (callback?.error) {
-    //     toast.error(callback.error);
-    //   }
-    // });
+    signIn("credentials", {
+      ...data,
+      redirect: false,
+    }).then((callback) => {
+      setIsLoading(false);
+      if (callback?.ok) {
+        toast.success("Logged in");
+        router.refresh();
+        loginModal.onClose();
+      }
+      if (callback?.error) {
+        toast.error(callback.error);
+      }
+    });
   };
 
   const onToggle = useCallback(() => {
@@ -87,7 +85,7 @@ export default function LoginModal() {
   const footerContent = (
     <div className="flex flex-col gap-4 mt-3">
       <hr />
-      <Button
+      {/*<Button
         outline
         label="Continue with Google"
         icon={FcGoogle}
@@ -99,6 +97,7 @@ export default function LoginModal() {
         icon={AiFillGithub}
         onClick={() => console.log("github")}
       />
+      */}
       <div
         className="
       text-neutral-500 text-center mt-4 font-light"

@@ -3,21 +3,25 @@
 import { useCallback, useState, useRef } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { useRouter } from "next/navigation";
+import { User } from "@prisma/client";
+import { signOut } from "next-auth/react";
 
 import Avatar from "@/components/Avatar";
-import MenuItem from "@/components/MenuItem";
+import MenuItem from "@/components/navbar/MenuItem";
 
 import { useRegisterModal } from "@/hooks/useRegisterModal";
 import { useLoginModal } from "@/hooks/useLoginModal";
 import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 
-export default function UserMenu() {
+interface UserMenuProps {
+  currentUser?: User | null;
+}
+
+export default function UserMenu({ currentUser }: UserMenuProps) {
   const ref = useRef(null);
 
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-
-  const currentUser = false;
 
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
@@ -68,7 +72,7 @@ export default function UserMenu() {
         >
           <AiOutlineMenu />
           <div className="hidden md:block">
-            <Avatar src="/images/placeholder.jpg" />
+            <Avatar src={currentUser?.image} />
           </div>
         </div>
       </div>
@@ -108,7 +112,7 @@ export default function UserMenu() {
                 />
                 <MenuItem label="Airbnb your home" onClick={() => {}} />
                 <hr />
-                <MenuItem label="Logout" onClick={() => {}} />
+                <MenuItem label="Logout" onClick={() => signOut()} />
               </>
             ) : (
               <>

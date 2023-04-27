@@ -14,6 +14,7 @@ export default function Logo() {
         width="100"
         height="32"
         src="/images/logo.png"
+        priority
       />
     </div>
   );

@@ -25,3 +25,5 @@ export const useOnClickOutside = <T extends HTMLElement = HTMLElement>(
     };
   }, [ref, handler]); // Reload only if ref or handler changes
 };
+
+export default useOnClickOutside;

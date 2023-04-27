@@ -16,7 +16,7 @@ import { FcGoogle } from "react-icons/fc";
 
 import Modal from "@/components/modals/Modal";
 import Button from "@/components/Button";
-import Input from "@/components/Input";
+import Input from "@/components/inputs/Input";
 import Heading from "@/components/Heading";
 
 const schema = yup
@@ -101,7 +101,7 @@ export default function RegisterModal() {
   const footerContent = (
     <div className="flex flex-col gap-4 mt-3">
       <hr />
-      <Button
+      {/*<Button
         outline
         label="Continue with Google"
         icon={FcGoogle}
@@ -112,7 +112,7 @@ export default function RegisterModal() {
         label="Continue with Github"
         icon={AiFillGithub}
         onClick={() => signIn("github")}
-      />
+  />*/}
       <div
         className="
           text-neutral-500
