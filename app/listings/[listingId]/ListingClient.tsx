@@ -45,7 +45,7 @@ export default function ListingClient({
     reservations.forEach((reservation: any) => {
       const range = eachDayOfInterval({
         start: new Date(reservation.startDate),
-        end: new Date(reservation.endDate)
+        end: new Date(reservation.endDate),
       });
 
       dates = [...dates, ...range];
@@ -55,8 +55,7 @@ export default function ListingClient({
   }, [reservations]);
 
   const category = useMemo(() => {
-     return categories.find((items) =>
-      items.label === listing.category);
+    return categories.find((items) => items.label === listing.category);
   }, [listing.category]);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -64,44 +63,34 @@ export default function ListingClient({
   const [dateRange, setDateRange] = useState<Range>(initialDateRange);
 
   const onCreateReservation = useCallback(() => {
-      if (!currentUser) {
-        return loginModal.onOpen();
-      }
-      setIsLoading(true);
+    if (!currentUser) {
+      return loginModal.onOpen();
+    }
+    setIsLoading(true);
 
-      axios.post('/api/reservations', {
+    axios
+      .post("/api/reservations", {
         totalPrice,
         startDate: dateRange.startDate,
         endDate: dateRange.endDate,
-        listingId: listing?.id
+        listingId: listing?.id,
       })
       .then(() => {
-        toast.success('Listing reserved!');
+        toast.success("Listing reserved!");
         setDateRange(initialDateRange);
-        router.push('/trips');
+        router.push("/trips");
       })
       .catch(() => {
-        toast.error('Something went wrong.');
+        toast.error("Something went wrong.");
       })
       .finally(() => {
         setIsLoading(false);
-      })
-  },
-  [
-    totalPrice,
-    dateRange,
-    listing?.id,
-    router,
-    currentUser,
-    loginModal
-  ]);
+      });
+  }, [totalPrice, dateRange, listing?.id, router, currentUser, loginModal]);
 
   useEffect(() => {
     if (dateRange.startDate && dateRange.endDate) {
-      const dayCount = differenceInDays(
-        dateRange.endDate,
-        dateRange.startDate
-      );
+      const dayCount = differenceInDays(dateRange.endDate, dateRange.startDate);
 
       if (dayCount && listing.price) {
         setTotalPrice(dayCount * listing.price);
@@ -167,4 +156,5 @@ export default function ListingClient({
         </div>
       </div>
     </Container>
+  );
 }
